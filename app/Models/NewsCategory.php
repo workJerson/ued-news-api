@@ -10,4 +10,23 @@ class NewsCategory extends Model
 {
     use HasFactory;
     use Filterable;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'status',
+    ];
+
+    public function searchable()
+    {
+        return [
+            'name',
+            'description',
+        ];
+    }
+
+    public function news()
+    {
+        return $this->hasMany(News::class);
+    }
 }

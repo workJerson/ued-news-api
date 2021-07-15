@@ -10,4 +10,22 @@ class Tags extends Model
 {
     use HasFactory;
     use Filterable;
+
+    protected $fillable = [
+        'name',
+        'status',
+    ];
+
+    public function searchable()
+    {
+        return [
+            'name',
+            'news_header',
+        ];
+    }
+
+    public function news()
+    {
+        return $this->belongsToMany(News::class);
+    }
 }

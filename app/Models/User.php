@@ -23,9 +23,18 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'middle_name',
+        'birth_date',
+        'contact_number',
+        'full_address',
+        'avatar_path',
         'email',
         'password',
+        'status',
+        'account_type',
+        'login_attempts',
     ];
 
     /**
@@ -46,4 +55,53 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Increment the login attempts of the user.
+     */
+    public function incrementLoginAttempts()
+    {
+        $this->increment('login_attempts');
+
+        if ($this->login_attempts >= 3) {
+            $this->deactivate();
+        }
+    }
+
+    /**
+     * Clear the user's number of login attempts.
+     */
+    public function clearLoginAttempts()
+    {
+        $this->login_attempts = 0;
+        $this->save();
+    }
+
+    /**
+     * Deactivate the user.
+     */
+    public function deactivate()
+    {
+        $this->status = 0;
+
+        $this->save();
+    }
+
+    public function findForPassport($email)
+    {
+        return self::where('email', $email)->first();
+    }
+
+    /**
+     * Set Password Attribute of User.
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function news()
+    {
+        return $this->hasMany(News::class);
+    }
 }
