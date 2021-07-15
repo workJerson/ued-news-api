@@ -81,6 +81,11 @@ class ArticleCategoryTableSeeder extends Seeder
                 'name' => 'World',
                 'description' => 'World article category',
             ],
+            [
+                'id' => 14,
+                'name' => 'News',
+                'description' => 'News article category',
+            ],
         ];
 
         foreach ($articleCategories as $articleCategory) {
