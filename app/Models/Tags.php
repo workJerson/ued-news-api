@@ -20,12 +20,12 @@ class Tags extends Model
     {
         return [
             'name',
-            'news_header',
+            'articles_header',
         ];
     }
 
-    public function news()
+    public function articles()
     {
-        return $this->belongsToMany(News::class);
+        return $this->belongsToMany(Article::class);
     }
 }

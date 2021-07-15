@@ -100,8 +100,8 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function news()
+    public function articles()
     {
-        return $this->hasMany(News::class);
+        return $this->hasMany(Article::class);
     }
 }

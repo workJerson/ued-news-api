@@ -6,7 +6,7 @@ use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class News extends Model
+class Article extends Model
 {
     use HasFactory;
     use Filterable;
@@ -19,7 +19,7 @@ class News extends Model
         'view_count',
         'status',
         'created_by',
-        'news_category_id',
+        'article_category_id',
     ];
 
     public function searchable()
@@ -38,7 +38,7 @@ class News extends Model
 
     public function category()
     {
-        return $this->belongsTo(NewsCategory::class);
+        return $this->belongsTo(ArticleCategory::class);
     }
 
     public function tags()
