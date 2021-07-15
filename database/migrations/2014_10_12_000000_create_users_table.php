@@ -21,12 +21,13 @@ class CreateUsersTable extends Migration
             $table->string('birth_date')->nullable();
             $table->string('contact_number')->nullable();
             $table->string('full_address')->nullable();
+            $table->string('avatar_path')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->unsignedTinyInteger('status')->default(1);
-            $table->unsignedTinyInteger('account_type')->nullable();
+            $table->string('account_type');
             $table->unsignedTinyInteger('login_attempts')->default(0);
             $table->timestamps();
         });

@@ -19,10 +19,13 @@ class CreateNewsTable extends Migration
             $table->string('body')->nullable();
             $table->string('video_path')->nullable();
             $table->string('thumbnail_path')->nullable();
-            $table->integer('status')->nullable()->default(1);
+            $table->integer('view_count')->default(0);
+            $table->integer('status')->default(1);
             $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('news_category_id')->nullable();
             $table->timestamps();
             $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('news_category_id')->references('id')->on('news_categories');
             $table->index('created_by');
         });
     }
