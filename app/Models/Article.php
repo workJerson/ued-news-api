@@ -14,7 +14,7 @@ class Article extends Model
     protected $fillable = [
         'header',
         'body',
-        'view_path',
+        'video_path',
         'thumbnail_path',
         'view_count',
         'status',
