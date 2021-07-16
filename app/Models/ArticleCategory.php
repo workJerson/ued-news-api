@@ -27,6 +27,14 @@ class ArticleCategory extends Model
 
     public function articles()
     {
-        return $this->hasMany(Article::class);
+        return $this->hasMany(Article::class, 'article_category_id', 'id');
+    }
+
+    public function latestArticles()
+    {
+        return $this->articles()
+            ->orderBy('view_count', 'desc')
+            ->orderBy('id', 'desc')
+            ->take(2);
     }
 }

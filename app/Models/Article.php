@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Article extends Model
 {
@@ -12,6 +13,7 @@ class Article extends Model
     use Filterable;
 
     protected $fillable = [
+        'slug',
         'header',
         'body',
         'video_path',
@@ -31,6 +33,11 @@ class Article extends Model
         ];
     }
 
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = Str::slug($value);
+    }
+
     public function creator()
     {
         return $this->belongsTo(User::class);
@@ -38,7 +45,7 @@ class Article extends Model
 
     public function category()
     {
-        return $this->belongsTo(ArticleCategory::class);
+        return $this->belongsTo(ArticleCategory::class, 'article_category_id', 'id');
     }
 
     public function tags()
