@@ -168,7 +168,6 @@ class ArticleTableSeeder extends Seeder
 
         foreach ($articles as $article) {
             $articleObject = Article::firstOrCreate(['id' => $article['id']], $article);
-
             // Generate random ids for tags
             $number = rand(2, 5);
             $ids = [1, 2, 3, 4, 5];
@@ -186,6 +185,9 @@ class ArticleTableSeeder extends Seeder
                     'article_category_id',
                 ]));
             }
+
+            $articleObject->slug = $articleObject->header;
+            $articleObject->save();
         }
     }
 }

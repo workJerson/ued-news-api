@@ -45,6 +45,8 @@ class TagTableSeeder extends Seeder
                     'name',
                 ]));
             }
+            $tagObject->slug = $tagObject->name;
+            $tagObject->save();
         }
     }
 }
