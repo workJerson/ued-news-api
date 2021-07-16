@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\TagsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,5 +36,6 @@ Route::group(
     function () {
         Route::resource('articles', ArticleController::class, ['except' => ['edit', 'create']]);
         Route::resource('article-categories', ArticleCategoryController::class, ['except' => ['edit', 'create']]);
+        Route::resource('tags', TagsController::class, ['except' => ['edit', 'create']]);
     }
 );
