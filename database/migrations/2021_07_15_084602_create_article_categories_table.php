@@ -18,6 +18,7 @@ class CreateArticleCategoriesTable extends Migration
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->integer('status')->nullable()->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

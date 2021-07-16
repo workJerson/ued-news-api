@@ -5,12 +5,14 @@ namespace App\Models;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Tags extends Model
 {
     use HasFactory;
     use Filterable;
+    use SoftDeletes;
 
     protected $fillable = [
         'slug',

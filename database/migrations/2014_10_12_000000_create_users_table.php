@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->unsignedTinyInteger('status')->default(1);
             $table->string('account_type');
             $table->unsignedTinyInteger('login_attempts')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

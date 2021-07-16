@@ -20,6 +20,8 @@ class CreateArticleTagsTable extends Migration
             $table->timestamps();
             $table->foreign('article_id')->references('id')->on('articles');
             $table->foreign('tags_id')->references('id')->on('tags');
+            $table->index('article_id');
+            $table->index('tags_id');
         });
     }
 

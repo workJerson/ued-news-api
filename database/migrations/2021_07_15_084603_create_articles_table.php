@@ -24,10 +24,12 @@ class CreateArticlesTable extends Migration
             $table->integer('status')->default(1);
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('article_category_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('article_category_id')->references('id')->on('article_categories');
             $table->index('created_by');
+            $table->index('article_category_id');
         });
     }
 

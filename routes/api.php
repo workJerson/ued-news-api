@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,5 +26,12 @@ Route::group(
         Route::get('articles', PublicController::class)->name('articles');
         Route::get('articles/{slug}', 'App\Http\Controllers\PublicController@showArticleBySlug');
         Route::get('articles/tags/{slug}', 'App\Http\Controllers\PublicController@showArticlesByTag');
+    }
+);
+
+Route::group(
+    [],
+    function () {
+        Route::resource('articles', ArticleController::class, ['except' => ['edit', 'create']]);
     }
 );
