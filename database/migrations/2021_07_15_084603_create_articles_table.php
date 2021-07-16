@@ -15,6 +15,7 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->nullable();
             $table->string('header')->nullable();
             $table->longText('body')->nullable();
             $table->string('video_path')->nullable();
