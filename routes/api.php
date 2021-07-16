@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Http\Request;
@@ -33,5 +34,6 @@ Route::group(
     [],
     function () {
         Route::resource('articles', ArticleController::class, ['except' => ['edit', 'create']]);
+        Route::resource('article-categories', ArticleCategoryController::class, ['except' => ['edit', 'create']]);
     }
 );

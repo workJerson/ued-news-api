@@ -59,7 +59,7 @@ class ArticleController extends Controller
             return \response(['message' => $th->getMessage()], 400);
         }
 
-        return \response($articleObject, 200);
+        return \response($articleObject, 201);
     }
 
     /**
