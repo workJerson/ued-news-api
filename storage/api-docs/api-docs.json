@@ -205,7 +205,7 @@
                     }
                 },
                 "responses": {
-                    "202": {
+                    "200": {
                         "description": "Successful operation"
                     },
                     "400": {
@@ -241,13 +241,8 @@
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
+                    "200": {
+                        "description": "Successful operation"
                     },
                     "401": {
                         "description": "Unauthenticated"
@@ -416,6 +411,225 @@
                     }
                 }
             }
+        },
+        "/tags": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get all Tags",
+                "description": "Returns list of tag data",
+                "operationId": "indexTag",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "query",
+                        "description": "Filter by the slug of tag",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filter by the name of tag",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status of article 1 = Active, 0 = Inactive",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "15"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Store new tag",
+                "description": "Returns tag data",
+                "operationId": "storeTags",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreTagsRequestModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/tags/{id}": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Show certain tag",
+                "description": "Returns an tag data",
+                "operationId": "showTag",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Tags id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Update existing tag",
+                "description": "Returns updated tag data",
+                "operationId": "updateTags",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Tags id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateTagsRequestModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Delete existing Tags",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteTags",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Tag id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -469,6 +683,22 @@
                 },
                 "type": "object"
             },
+            "StoreTagsRequestModel": {
+                "title": "Store Tag request",
+                "description": "Store Tag request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "name of the new article",
+                        "type": "string",
+                        "example": "Sample Tag"
+                    }
+                },
+                "type": "object"
+            },
             "UpdateArticleRequestModel": {
                 "title": "Update Article request",
                 "description": "Update Article request body data",
@@ -492,6 +722,29 @@
                                 "description": "view_count of the new article",
                                 "type": "string",
                                 "example": "100"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "UpdateTagsRequestModel": {
+                "title": "Update Tag request",
+                "description": "Update Tag request body data",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/StoreTagsRequestModel"
+                    },
+                    {
+                        "required": [
+                            "name"
+                        ],
+                        "properties": {
+                            "status": {
+                                "title": "status",
+                                "description": "name of the new article",
+                                "type": "string",
+                                "example": "1"
                             }
                         },
                         "type": "object"

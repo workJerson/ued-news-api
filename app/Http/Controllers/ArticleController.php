@@ -266,7 +266,7 @@ class ArticleController extends Controller
      *          @OA\JsonContent(ref="#/components/schemas/UpdateArticleRequestModel")
      *      ),
      *      @OA\Response(
-     *          response=202,
+     *          response=200,
      *          description="Successful operation",
      *       ),
      *      @OA\Response(
@@ -330,9 +330,8 @@ class ArticleController extends Controller
      *          )
      *      ),
      *      @OA\Response(
-     *          response=204,
+     *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent()
      *       ),
      *      @OA\Response(
      *          response=401,

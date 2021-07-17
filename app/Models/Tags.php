@@ -23,6 +23,8 @@ class Tags extends Model
     public function searchable()
     {
         return [
+            'slug',
+            'status',
             'name',
             'articles_header',
         ];
