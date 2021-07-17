@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Models;
+
+use App\Traits\Filterable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
+
+class Article extends Model
+{
+    use HasFactory;
+    use Filterable;
+    use SoftDeletes;
+
+    protected $fillable = [
+        'slug',
+        'header',
+        'body',
+        'video_path',
+        'thumbnail_path',
+        'view_count',
+        'status',
+        'created_by',
+        'article_category_id',
+    ];
+
+    public function searchable()
+    {
+        return [
+            'status',
+            'header',
+            'category_name',
+            'creator_full_name',
+        ];
+    }
+
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = Str::slug($value);
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(ArticleCategory::class, 'article_category_id', 'id');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tags::class);
+    }
+}
