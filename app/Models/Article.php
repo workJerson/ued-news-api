@@ -29,10 +29,12 @@ class Article extends Model
     public function searchable()
     {
         return [
+            'id',
             'status',
             'header',
             'category_name',
             'creator_full_name',
+            'tags_name',
         ];
     }
 

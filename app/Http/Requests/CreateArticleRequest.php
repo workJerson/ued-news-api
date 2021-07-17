@@ -44,6 +44,10 @@ class CreateArticleRequest extends FormRequest
                 'nullable',
                 'numeric',
             ],
+            'status' => [
+                'nullable',
+                'numeric',
+            ],
             'article_category_id' => [
                 'required',
                 'numeric',
