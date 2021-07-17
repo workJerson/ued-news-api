@@ -8,6 +8,27 @@ use App\Models\ArticleCategory;
 
 class PublicController extends Controller
 {
+    /**
+     * @OA\Get(
+     *      path="/public/articles",
+     *      operationId="__invoke",
+     *      tags={"Public"},
+     *      summary="Get list of articles for home page",
+     *      description="Returns list of articles",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation")
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
     public function __invoke()
     {
         $data = [];
@@ -45,6 +66,40 @@ class PublicController extends Controller
         return response($data, 200);
     }
 
+    /**
+     * @OA\Get(
+     *      path="/public/articles/{slug}",
+     *      operationId="showArticleBySlug",
+     *      tags={"Public"},
+     *      summary="Get article information by slug",
+     *      description="Returns article data",
+     *      @OA\Parameter(
+     *          name="slug",
+     *          description="Article's slug",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
     public function showArticleBySlug(string $slug)
     {
         $data = [];
@@ -76,6 +131,58 @@ class PublicController extends Controller
         return response(['message' => 'Invalid Article'], 404);
     }
 
+    /**
+     * @OA\Get(
+     *      path="/public/articles/tags/{slug}",
+     *      operationId="showArticlesByTag",
+     *      tags={"Public"},
+     *      summary="Get all articles by Tag's slug",
+     *      description="Returns list of article data",
+     *      @OA\Parameter(
+     *          name="slug",
+     *          description="Tags slug",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="page",
+     *          description="Page",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="per_page",
+     *          description="Items per page",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
     public function showArticlesByTag(string $slug, ResourceFilters $filters, Article $articles)
     {
         return $this->generateCachedResponse(function () use ($filters, $articles, $slug) {
@@ -90,6 +197,58 @@ class PublicController extends Controller
         });
     }
 
+    /**
+     * @OA\Get(
+     *      path="/public/articles/category/{categoryName}",
+     *      operationId="showArticlesByCategory",
+     *      tags={"Public"},
+     *      summary="Get all articles by category name",
+     *      description="Returns list of article data",
+     *      @OA\Parameter(
+     *          name="categoryName",
+     *          description="Category name",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="page",
+     *          description="Page",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="per_page",
+     *          description="Items per page",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
     public function showArticlesByCategory(string $categoryName, ResourceFilters $filters, Article $articles)
     {
         return $this->generateCachedResponse(function () use ($filters, $articles, $categoryName) {
