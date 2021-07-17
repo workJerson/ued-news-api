@@ -1,0 +1,514 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "U-ED News API Documentation",
+        "description": "A simple API made with Laravel 8",
+        "contact": {
+            "email": "work.jerson.baltazar@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api",
+            "description": "Demo API Server"
+        }
+    ],
+    "paths": {
+        "/articles": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get all articles",
+                "description": "Returns list of article data",
+                "operationId": "indexArticle",
+                "parameters": [
+                    {
+                        "name": "header",
+                        "in": "query",
+                        "description": "Filter by header of the article",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "category_name",
+                        "in": "query",
+                        "description": "Filter by the name of article's category",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "creator_full_name",
+                        "in": "query",
+                        "description": "Filter by the full name of article's creator",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "tags_name",
+                        "in": "query",
+                        "description": "Filter by the name of article's tags",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status of article 1 = Active, 0 = Inactive",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "15"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Store new article",
+                "description": "Returns article data",
+                "operationId": "storeArticle",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreArticleRequestModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/articles/{article}": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Show certain article",
+                "description": "Returns an article data",
+                "operationId": "showArticle",
+                "parameters": [
+                    {
+                        "name": "article",
+                        "in": "path",
+                        "description": "Article's id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Update existing article",
+                "description": "Returns updated article data",
+                "operationId": "updateArticle",
+                "parameters": [
+                    {
+                        "name": "article",
+                        "in": "path",
+                        "description": "Article id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateArticleRequestModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Delete existing Article",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteArticle",
+                "parameters": [
+                    {
+                        "name": "article",
+                        "in": "path",
+                        "description": "Article id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/public/articles": {
+            "get": {
+                "tags": [
+                    "Public"
+                ],
+                "summary": "Get list of articles for home page",
+                "description": "Returns list of articles",
+                "operationId": "__invoke",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/public/articles/{slug}": {
+            "get": {
+                "tags": [
+                    "Public"
+                ],
+                "summary": "Get article information by slug",
+                "description": "Returns article data",
+                "operationId": "showArticleBySlug",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Article's slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/public/articles/tags/{slug}": {
+            "get": {
+                "tags": [
+                    "Public"
+                ],
+                "summary": "Get all articles by Tag's slug",
+                "description": "Returns list of article data",
+                "operationId": "showArticlesByTag",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Tags slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/public/articles/category/{categoryName}": {
+            "get": {
+                "tags": [
+                    "Public"
+                ],
+                "summary": "Get all articles by category name",
+                "description": "Returns list of article data",
+                "operationId": "showArticlesByCategory",
+                "parameters": [
+                    {
+                        "name": "categoryName",
+                        "in": "path",
+                        "description": "Category name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "StoreArticleRequestModel": {
+                "title": "Store Article request",
+                "description": "Store Article request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "header": {
+                        "title": "header",
+                        "description": "header of the new article",
+                        "type": "string",
+                        "example": "A nice article"
+                    },
+                    "body": {
+                        "title": "body",
+                        "description": "body of the new article",
+                        "type": "string",
+                        "example": "<p>Content here</p>"
+                    },
+                    "video_path": {
+                        "title": "video_path",
+                        "description": "body of the new article",
+                        "type": "string",
+                        "example": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                    },
+                    "thumbnail_path": {
+                        "title": "thumbnail_path",
+                        "description": "body of the new article",
+                        "type": "string",
+                        "example": "https://i.ytimg.com/an_webp/dQw4w9WgXcQ/mqdefault_6s.webp?du=3000&sqp=CLisy4cG&rs=AOn4CLDj6lo3qNP4APhTvCFcJLlAEKlYkw"
+                    },
+                    "article_category_id": {
+                        "title": "article_category_id",
+                        "description": "body of the new article",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "tag_ids": {
+                        "title": "tag_ids",
+                        "description": "body of the new article",
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateArticleRequestModel": {
+                "title": "Update Article request",
+                "description": "Update Article request body data",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/StoreArticleRequestModel"
+                    },
+                    {
+                        "required": [
+                            "name"
+                        ],
+                        "properties": {
+                            "status": {
+                                "title": "status",
+                                "description": "status of the new article",
+                                "type": "string",
+                                "example": "1"
+                            },
+                            "view_count": {
+                                "title": "view_count",
+                                "description": "view_count of the new article",
+                                "type": "string",
+                                "example": "100"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            }
+        },
+        "responses": {
+            "401": {
+                "description": "Unauthenticated"
+            },
+            "403": {
+                "description": "Forbidden"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

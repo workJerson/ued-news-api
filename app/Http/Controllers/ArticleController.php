@@ -10,6 +10,97 @@ use Illuminate\Support\Facades\DB;
 class ArticleController extends Controller
 {
     /**
+     * @OA\Get(
+     *      path="/articles",
+     *      operationId="indexArticle",
+     *      tags={"Articles"},
+     *      summary="Get all articles",
+     *      description="Returns list of article data",
+     *     @OA\Parameter(
+     *          name="header",
+     *          description="Filter by header of the article",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="category_name",
+     *          description="Filter by the name of article's category",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="creator_full_name",
+     *          description="Filter by the full name of article's creator",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="tags_name",
+     *          description="Filter by the name of article's tags",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="status",
+     *          description="Filter by status of article 1 = Active, 0 = Inactive",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="page",
+     *          description="Page",
+     *          required=true,
+     *          in="query",
+     *          example="1",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="per_page",
+     *          description="Items per page",
+     *          required=false,
+     *          in="query",
+     *          example="15",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -32,6 +123,36 @@ class ArticleController extends Controller
     public function create()
     {
     }
+
+    /**
+     * @OA\Post(
+     *      path="/articles",
+     *      operationId="storeArticle",
+     *      tags={"Articles"},
+     *      summary="Store new article",
+     *      description="Returns article data",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/StoreArticleRequestModel")
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
 
     /**
      * Store a newly created resource in storage.
@@ -63,6 +184,41 @@ class ArticleController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/articles/{article}",
+     *      operationId="showArticle",
+     *      tags={"Articles"},
+     *      summary="Show certain article",
+     *      description="Returns an article data",
+     *      @OA\Parameter(
+     *          name="article",
+     *          description="Article's id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
+
+    /**
      * Display the specified resource.
      *
      * @return \Illuminate\Http\Response
@@ -90,6 +246,49 @@ class ArticleController extends Controller
     }
 
     /**
+     * @OA\Put(
+     *      path="/articles/{article}",
+     *      operationId="updateArticle",
+     *      tags={"Articles"},
+     *      summary="Update existing article",
+     *      description="Returns updated article data",
+     *      @OA\Parameter(
+     *          name="article",
+     *          description="Article id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/UpdateArticleRequestModel")
+     *      ),
+     *      @OA\Response(
+     *          response=202,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *      )
+     * )
+     */
+
+    /**
      * Update the specified resource in storage.
      *
      * @return \Illuminate\Http\Response
@@ -113,6 +312,42 @@ class ArticleController extends Controller
 
         return response($article, 200);
     }
+
+    /**
+     * @OA\Delete(
+     *      path="/articles/{article}",
+     *      operationId="deleteArticle",
+     *      tags={"Articles"},
+     *      summary="Delete existing Article",
+     *      description="Deletes a record and returns no content",
+     *      @OA\Parameter(
+     *          name="article",
+     *          description="Article id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="Successful operation",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *      )
+     * )
+     */
 
     /**
      * Remove the specified resource from storage.
