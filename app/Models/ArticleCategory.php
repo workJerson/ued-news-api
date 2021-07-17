@@ -24,6 +24,7 @@ class ArticleCategory extends Model
         return [
             'name',
             'description',
+            'status',
         ];
     }
 

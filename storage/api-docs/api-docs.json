@@ -19,6 +19,225 @@
         }
     ],
     "paths": {
+        "/article-categories": {
+            "get": {
+                "tags": [
+                    "Article Categories"
+                ],
+                "summary": "Get all article categories",
+                "description": "Returns list of article categories data",
+                "operationId": "indexArticleCategory",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filter by name of the article category",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Filter by the description of articles category",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status of article category 1 = Active, 0 = Inactive",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "15"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Article Categories"
+                ],
+                "summary": "Store new article category",
+                "description": "Returns article category data",
+                "operationId": "storeArticleCategory",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreArticleCategoryRequestModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/article-categories/{articleCategory}": {
+            "get": {
+                "tags": [
+                    "Article Categories"
+                ],
+                "summary": "Show certain article category",
+                "description": "Returns an article category data",
+                "operationId": "showArticleCategory",
+                "parameters": [
+                    {
+                        "name": "articleCategory",
+                        "in": "path",
+                        "description": "Article category's id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Article Categories"
+                ],
+                "summary": "Update existing article category",
+                "description": "Returns updated article category data",
+                "operationId": "updateArticleCategory",
+                "parameters": [
+                    {
+                        "name": "articleCategory",
+                        "in": "path",
+                        "description": "Article category id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateArticleCategoryRequestModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Article Categories"
+                ],
+                "summary": "Delete existing Article Category",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteArticleCategory",
+                "parameters": [
+                    {
+                        "name": "articleCategory",
+                        "in": "path",
+                        "description": "Article Category id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
         "/articles": {
             "get": {
                 "tags": [
@@ -205,7 +424,7 @@
                     }
                 },
                 "responses": {
-                    "202": {
+                    "200": {
                         "description": "Successful operation"
                     },
                     "400": {
@@ -241,13 +460,8 @@
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
+                    "200": {
+                        "description": "Successful operation"
                     },
                     "401": {
                         "description": "Unauthenticated"
@@ -416,10 +630,251 @@
                     }
                 }
             }
+        },
+        "/tags": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get all Tags",
+                "description": "Returns list of tag data",
+                "operationId": "indexTag",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "query",
+                        "description": "Filter by the slug of tag",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filter by the name of tag",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status of article 1 = Active, 0 = Inactive",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "15"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Store new tag",
+                "description": "Returns tag data",
+                "operationId": "storeTags",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreTagsRequestModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/tags/{id}": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Show certain tag",
+                "description": "Returns an tag data",
+                "operationId": "showTag",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Tags id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Update existing tag",
+                "description": "Returns updated tag data",
+                "operationId": "updateTags",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Tags id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateTagsRequestModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Delete existing Tags",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteTags",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Tag id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "StoreArticleCategoryRequestModel": {
+                "title": "Store Article Category request",
+                "description": "Store Article Category request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "name of the new article category",
+                        "type": "string",
+                        "example": "Sample Category"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "description of the new article category",
+                        "type": "string",
+                        "example": "Sample description of article Category"
+                    }
+                },
+                "type": "object"
+            },
             "StoreArticleRequestModel": {
                 "title": "Store Article request",
                 "description": "Store Article request body data",
@@ -469,6 +924,45 @@
                 },
                 "type": "object"
             },
+            "StoreTagsRequestModel": {
+                "title": "Store Tag request",
+                "description": "Store Tag request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "name of the new article",
+                        "type": "string",
+                        "example": "Sample Tag"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateArticleCategoryRequestModel": {
+                "title": "Update Article Category request",
+                "description": "Update Article Category request body data",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/StoreArticleCategoryRequestModel"
+                    },
+                    {
+                        "required": [
+                            "name"
+                        ],
+                        "properties": {
+                            "status": {
+                                "title": "status",
+                                "description": "status of the article category 1 = Active, 0 = Inactive",
+                                "type": "integer",
+                                "example": "1"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
             "UpdateArticleRequestModel": {
                 "title": "Update Article request",
                 "description": "Update Article request body data",
@@ -483,7 +977,7 @@
                         "properties": {
                             "status": {
                                 "title": "status",
-                                "description": "status of the new article",
+                                "description": "status of the new article 1 = Active, 0 = Inactive",
                                 "type": "string",
                                 "example": "1"
                             },
@@ -492,6 +986,29 @@
                                 "description": "view_count of the new article",
                                 "type": "string",
                                 "example": "100"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "UpdateTagsRequestModel": {
+                "title": "Update Tag request",
+                "description": "Update Tag request body data",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/StoreTagsRequestModel"
+                    },
+                    {
+                        "required": [
+                            "name"
+                        ],
+                        "properties": {
+                            "status": {
+                                "title": "status",
+                                "description": "status of the tag  1 = Active, 0 = Inactive",
+                                "type": "string",
+                                "example": "1"
                             }
                         },
                         "type": "object"
