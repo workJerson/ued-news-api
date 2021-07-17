@@ -27,6 +27,7 @@ Route::group(
     function () {
         Route::get('articles', PublicController::class)->name('articles');
         Route::get('articles/{slug}', 'App\Http\Controllers\PublicController@showArticleBySlug');
+        Route::get('articles/category/{categoryName}', 'App\Http\Controllers\PublicController@showArticlesByCategory');
         Route::get('articles/tags/{slug}', 'App\Http\Controllers\PublicController@showArticlesByTag');
     }
 );

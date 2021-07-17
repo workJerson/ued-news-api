@@ -84,8 +84,21 @@ class PublicController extends Controller
                         $query->where('slug', $slug);
                     })
                     ->with(['tags', 'category'])
-                    ->filter($filters)
-                    ->where('status', '!=', 2);
+                    ->filter($filters);
+
+            return $this->paginateOrGet($articleList);
+        });
+    }
+
+    public function showArticlesByCategory(string $categoryName, ResourceFilters $filters, Article $articles)
+    {
+        return $this->generateCachedResponse(function () use ($filters, $articles, $categoryName) {
+            $articleList = $articles
+                    ->whereHas('category', function ($query) use ($categoryName) {
+                        $query->where('name', $categoryName);
+                    })
+                    ->with(['tags'])
+                    ->filter($filters);
 
             return $this->paginateOrGet($articleList);
         });
