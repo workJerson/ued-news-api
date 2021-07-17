@@ -15,7 +15,7 @@ class UpdateArticleRequestModel extends StoreArticleRequestModel
     /**
      * @OA\Property(
      *      title="status",
-     *      description="status of the new article",
+     *      description="status of the new article 1 = Active, 0 = Inactive",
      *      example="1"
      * )
      *
