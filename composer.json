@@ -23,7 +23,8 @@
     },
     "autoload": {
         "files": [
-            "app/Support/helpers.php"
+            "app/Support/helpers.php",
+            "app/Traits/Filterable.php"
         ],
         "psr-4": {
             "App\\": "app/",
