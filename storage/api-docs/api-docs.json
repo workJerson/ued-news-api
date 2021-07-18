@@ -89,7 +89,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -121,7 +126,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         },
         "/article-categories/{articleCategory}": {
@@ -156,7 +166,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -202,7 +217,12 @@
                     "404": {
                         "description": "Resource Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -235,7 +255,12 @@
                     "404": {
                         "description": "Resource Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         },
         "/articles": {
@@ -326,7 +351,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -358,7 +388,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         },
         "/articles/{article}": {
@@ -393,7 +428,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -439,7 +479,12 @@
                     "404": {
                         "description": "Resource Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -471,6 +516,45 @@
                     },
                     "404": {
                         "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login user",
+                "description": "Returns token and user details",
+                "operationId": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequestModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     }
                 }
             }
@@ -701,7 +785,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -733,7 +822,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         },
         "/tags/{id}": {
@@ -768,7 +862,12 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -814,7 +913,12 @@
                     "404": {
                         "description": "Resource Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -847,12 +951,39 @@
                     "404": {
                         "description": "Resource Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         }
     },
     "components": {
         "schemas": {
+            "LoginRequestModel": {
+                "title": "Login request",
+                "description": "Login request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "description": "email of the user",
+                        "type": "string",
+                        "example": "super.admin@yopmail.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "password of the user",
+                        "type": "string",
+                        "example": "Password@123"
+                    }
+                },
+                "type": "object"
+            },
             "StoreArticleCategoryRequestModel": {
                 "title": "Store Article Category request",
                 "description": "Store Article Category request body data",
@@ -1022,6 +1153,14 @@
             },
             "403": {
                 "description": "Forbidden"
+            }
+        },
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer {token})",
+                "name": "Authorization",
+                "in": "header"
             }
         }
     },

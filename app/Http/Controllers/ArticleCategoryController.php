@@ -15,6 +15,7 @@ class ArticleCategoryController extends Controller
      *      tags={"Article Categories"},
      *      summary="Get all article categories",
      *      description="Returns list of article categories data",
+     *        security={{"bearer_token":{}}},
      *     @OA\Parameter(
      *          name="name",
      *          description="Filter by name of the article category",
@@ -112,6 +113,7 @@ class ArticleCategoryController extends Controller
      *      tags={"Article Categories"},
      *      summary="Store new article category",
      *      description="Returns article category data",
+     *        security={{"bearer_token":{}}},
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(ref="#/components/schemas/StoreArticleCategoryRequestModel")
@@ -154,6 +156,7 @@ class ArticleCategoryController extends Controller
      *      tags={"Article Categories"},
      *      summary="Show certain article category",
      *      description="Returns an article category data",
+     *        security={{"bearer_token":{}}},
      *      @OA\Parameter(
      *          name="articleCategory",
      *          description="Article category's id",
@@ -210,6 +213,7 @@ class ArticleCategoryController extends Controller
      *      tags={"Article Categories"},
      *      summary="Update existing article category",
      *      description="Returns updated article category data",
+     *        security={{"bearer_token":{}}},
      *      @OA\Parameter(
      *          name="articleCategory",
      *          description="Article category id",
@@ -265,6 +269,7 @@ class ArticleCategoryController extends Controller
      *      tags={"Article Categories"},
      *      summary="Delete existing Article Category",
      *      description="Deletes a record and returns no content",
+     *        security={{"bearer_token":{}}},
      *      @OA\Parameter(
      *          name="articleCategory",
      *          description="Article Category id",

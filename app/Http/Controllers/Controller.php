@@ -32,6 +32,14 @@ class Controller extends BaseController
      *      description="Demo API Server"
      * )
      */
+
+    /**
+         @OAS\SecurityScheme(
+             securityScheme="bearerAuth",
+            type="http",
+            scheme="bearer"
+        )
+     **/
     protected function generateCachedResponse($callback)
     {
         // TODO: For refactor.

@@ -33,7 +33,14 @@ Route::group(
 );
 
 Route::group(
-    [],
+    ['prefix' => 'auth', 'namespace' => 'App\Http\Controllers'],
+    function () {
+        Route::post('login', 'AuthController@login');
+    }
+);
+
+Route::group(
+    ['middleware' => 'auth:api'],
     function () {
         Route::resource('articles', ArticleController::class, ['except' => ['edit', 'create']]);
         Route::resource('article-categories', ArticleCategoryController::class, ['except' => ['edit', 'create']]);
