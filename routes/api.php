@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\TagsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::group(
     ['prefix' => 'public'],
@@ -33,10 +34,18 @@ Route::group(
 );
 
 Route::group(
-    [],
+    ['prefix' => 'auth', 'namespace' => 'App\Http\Controllers'],
+    function () {
+        Route::post('login', 'AuthController@login');
+    }
+);
+
+Route::group(
+    ['middleware' => 'auth:api'],
     function () {
         Route::resource('articles', ArticleController::class, ['except' => ['edit', 'create']]);
         Route::resource('article-categories', ArticleCategoryController::class, ['except' => ['edit', 'create']]);
         Route::resource('tags', TagsController::class, ['except' => ['edit', 'create']]);
+        Route::resource('users', UserController::class, ['except' => ['edit', 'create']]);
     }
 );

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Filterable;
+use Carbon\Carbon;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -58,6 +59,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['full_name'];
+
+    public function searchable()
+    {
+        return [
+            'full_name',
+            'birth_date',
+            'contact_number',
+            'full_address',
+            'email',
+            'status',
+            'account_type',
+        ];
+    }
+
+    public function getFullNameAttribute()
+    {
+        return ucfirst($this->last_name).', '.ucfirst($this->first_name).' '.ucfirst($this->middle_name ?? '');
+    }
+
     /**
      * Increment the login attempts of the user.
      */
@@ -100,6 +121,14 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    /**
+     * Set Password Attribute of User.
+     */
+    public function setBirthDateAttribute($value)
+    {
+        $this->attributes['birth_date'] = Carbon::parse($value);
     }
 
     public function articles()

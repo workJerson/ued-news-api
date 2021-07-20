@@ -16,6 +16,8 @@ class ArticleController extends Controller
      *      tags={"Articles"},
      *      summary="Get all articles",
      *      description="Returns list of article data",
+     *      security={{"bearer_token":{}}},
+     *
      *     @OA\Parameter(
      *          name="header",
      *          description="Filter by header of the article",
@@ -131,6 +133,7 @@ class ArticleController extends Controller
      *      tags={"Articles"},
      *      summary="Store new article",
      *      description="Returns article data",
+     *        security={{"bearer_token":{}}},
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(ref="#/components/schemas/StoreArticleRequestModel")
@@ -167,6 +170,7 @@ class ArticleController extends Controller
 
             // Set SLUG value
             $articleObject->slug = $articleObject->header;
+            $article->created_by = request()->user()->id;
             $articleObject->save();
 
             if ($request->tag_ids) {
@@ -190,6 +194,7 @@ class ArticleController extends Controller
      *      tags={"Articles"},
      *      summary="Show certain article",
      *      description="Returns an article data",
+     *      security={{"bearer_token":{}}},
      *      @OA\Parameter(
      *          name="article",
      *          description="Article's id",
@@ -252,6 +257,7 @@ class ArticleController extends Controller
      *      tags={"Articles"},
      *      summary="Update existing article",
      *      description="Returns updated article data",
+     *      security={{"bearer_token":{}}},
      *      @OA\Parameter(
      *          name="article",
      *          description="Article id",
@@ -320,6 +326,7 @@ class ArticleController extends Controller
      *      tags={"Articles"},
      *      summary="Delete existing Article",
      *      description="Deletes a record and returns no content",
+     *      security={{"bearer_token":{}}},
      *      @OA\Parameter(
      *          name="article",
      *          description="Article id",

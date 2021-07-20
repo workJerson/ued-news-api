@@ -9,6 +9,41 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    /**
+     * @OA\Post(
+     *      path="/auth/login",
+     *      operationId="login",
+     *      tags={"Auth"},
+     *      summary="Login user",
+     *      description="Returns token and user details",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/LoginRequestModel")
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
+
+    /**
+     * login api.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -16,7 +51,6 @@ class AuthController extends Controller
             'password' => 'required|string',
             'remember_me' => 'boolean',
         ]);
-
         $credentials = request(['email', 'password']);
         if (!Auth::attempt($credentials)) {
             $userCheck = (new User())->findForPassport($request->input('email'));
@@ -63,9 +97,6 @@ class AuthController extends Controller
             'user' => $user->load(
                 // Load user related entities here
                 [
-                    'detail',
-                    'student',
-                    'school',
                 ]
             ),
         ]);

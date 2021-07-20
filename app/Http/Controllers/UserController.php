@@ -3,22 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Filters\ResourceFilters;
-use App\Http\Requests\CreateArticleCategoryRequest;
-use App\Models\ArticleCategory;
+use App\Http\Requests\CreateUserRequest;
+use App\Models\User;
 
-class ArticleCategoryController extends Controller
+class UserController extends Controller
 {
     /**
      * @OA\Get(
-     *      path="/article-categories",
-     *      operationId="indexArticleCategory",
-     *      tags={"Article Categories"},
-     *      summary="Get all article categories",
-     *      description="Returns list of article categories data",
-     *        security={{"bearer_token":{}}},
+     *      path="/users",
+     *      operationId="indexUser",
+     *      tags={"Users"},
+     *      summary="Get all users",
+     *      description="Returns list of user data",
+     *      security={{"bearer_token":{}}},
+     *
      *     @OA\Parameter(
-     *          name="name",
-     *          description="Filter by name of the article category",
+     *          name="full_name",
+     *          description="Filter by full name of the user",
      *          required=false,
      *          in="query",
      *          @OA\Schema(
@@ -26,8 +27,44 @@ class ArticleCategoryController extends Controller
      *          )
      *      ),
      *     @OA\Parameter(
-     *          name="description",
-     *          description="Filter by the description of articles category",
+     *          name="birth_date",
+     *          description="Filter by the birth_date of user",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="contact_number",
+     *          description="Filter by the contact number of user",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="full_address",
+     *          description="Filter by the full address of user",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="email",
+     *          description="Filter by the email of user",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="account_type",
+     *          description="Filter by the account type of user",
      *          required=false,
      *          in="query",
      *          @OA\Schema(
@@ -36,7 +73,7 @@ class ArticleCategoryController extends Controller
      *      ),
      *     @OA\Parameter(
      *          name="status",
-     *          description="Filter by status of article category 1 = Active, 0 = Inactive",
+     *          description="Filter by status of user 1 = Active, 0 = Inactive",
      *          required=false,
      *          in="query",
      *          @OA\Schema(
@@ -45,7 +82,7 @@ class ArticleCategoryController extends Controller
      *      ),
      *     @OA\Parameter(
      *          name="page",
-     *          description="Page number",
+     *          description="Page",
      *          required=true,
      *          in="query",
      *          example="1",
@@ -87,13 +124,14 @@ class ArticleCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ResourceFilters $filters, ArticleCategory $articleCategory)
+    public function index(ResourceFilters $filters, User $user)
     {
-        return $this->generateCachedResponse(function () use ($filters, $articleCategory) {
-            $articleCategoryList = $articleCategory
-                    ->filter($filters);
+        return $this->generateCachedResponse(function () use ($filters, $user) {
+            $userList = $user
+                    ->filter($filters)
+                    ->where('account_type', '<>', 'SuperAdmin');
 
-            return $this->paginateOrGet($articleCategoryList);
+            return $this->paginateOrGet($userList);
         });
     }
 
@@ -108,15 +146,15 @@ class ArticleCategoryController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/article-categories",
-     *      operationId="storeArticleCategory",
-     *      tags={"Article Categories"},
-     *      summary="Store new article category",
-     *      description="Returns article category data",
+     *      path="/users",
+     *      operationId="storeUser",
+     *      tags={"Users"},
+     *      summary="Store new user",
+     *      description="Returns user data",
      *        security={{"bearer_token":{}}},
      *      @OA\RequestBody(
      *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/StoreArticleCategoryRequestModel")
+     *          @OA\JsonContent(ref="#/components/schemas/StoreUserRequestModel")
      *      ),
      *      @OA\Response(
      *          response=201,
@@ -142,24 +180,24 @@ class ArticleCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateArticleCategoryRequest $request, ArticleCategory $articleCategory)
+    public function store(CreateUserRequest $request, User $user)
     {
-        $articleCategoryObject = $articleCategory->create($request->validated());
+        $userObject = $user->create($request->validated());
 
-        return \response($articleCategoryObject, 201);
+        return \response($userObject, 201);
     }
 
     /**
      * @OA\Get(
-     *      path="/article-categories/{articleCategory}",
-     *      operationId="showArticleCategory",
-     *      tags={"Article Categories"},
-     *      summary="Show certain article category",
-     *      description="Returns an article category data",
-     *        security={{"bearer_token":{}}},
+     *      path="/users/{user}",
+     *      operationId="showUser",
+     *      tags={"Users"},
+     *      summary="Show certain user",
+     *      description="Returns an user data",
+     *      security={{"bearer_token":{}}},
      *      @OA\Parameter(
-     *          name="articleCategory",
-     *          description="Article category's id",
+     *          name="user",
+     *          description="User's id",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -190,9 +228,9 @@ class ArticleCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(ArticleCategory $articleCategory)
+    public function show(User $user)
     {
-        return response($articleCategory);
+        return response($user);
     }
 
     /**
@@ -208,15 +246,15 @@ class ArticleCategoryController extends Controller
 
     /**
      * @OA\Put(
-     *      path="/article-categories/{articleCategory}",
-     *      operationId="updateArticleCategory",
-     *      tags={"Article Categories"},
-     *      summary="Update existing article category",
-     *      description="Returns updated article category data",
-     *        security={{"bearer_token":{}}},
+     *      path="/users/{user}",
+     *      operationId="updateUser",
+     *      tags={"Users"},
+     *      summary="Update existing user",
+     *      description="Returns updated user data",
+     *      security={{"bearer_token":{}}},
      *      @OA\Parameter(
-     *          name="articleCategory",
-     *          description="Article category id",
+     *          name="user",
+     *          description="User id",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -225,7 +263,7 @@ class ArticleCategoryController extends Controller
      *      ),
      *      @OA\RequestBody(
      *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/UpdateArticleCategoryRequestModel")
+     *          @OA\JsonContent(ref="#/components/schemas/UpdateUserRequestModel")
      *      ),
      *      @OA\Response(
      *          response=200,
@@ -255,24 +293,24 @@ class ArticleCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(CreateArticleCategoryRequest $request, ArticleCategory $articleCategory)
+    public function update(CreateUserRequest $request, User $user)
     {
-        $articleCategory->update($request->validated());
+        $user->update($request->validated());
 
-        return response($articleCategory);
+        return response($user, 200);
     }
 
     /**
      * @OA\Delete(
-     *      path="/article-categories/{articleCategory}",
-     *      operationId="deleteArticleCategory",
-     *      tags={"Article Categories"},
-     *      summary="Delete existing Article Category",
+     *      path="/users/{user}",
+     *      operationId="deleteUser",
+     *      tags={"Users"},
+     *      summary="Delete existing user",
      *      description="Deletes a record and returns no content",
-     *        security={{"bearer_token":{}}},
+     *      security={{"bearer_token":{}}},
      *      @OA\Parameter(
-     *          name="articleCategory",
-     *          description="Article Category id",
+     *          name="user",
+     *          description="User id",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -303,9 +341,9 @@ class ArticleCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ArticleCategory $articleCategory)
+    public function destroy(User $user)
     {
-        $articleCategory->delete();
+        $user->delete();
 
         return response(['message' => 'Deleted successfully'], 200);
     }

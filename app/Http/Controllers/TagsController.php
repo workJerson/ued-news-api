@@ -15,6 +15,7 @@ class TagsController extends Controller
      *      tags={"Tags"},
      *      summary="Get all Tags",
      *      description="Returns list of tag data",
+     *        security={{"bearer_token":{}}},
      *     @OA\Parameter(
      *          name="slug",
      *          description="Filter by the slug of tag",
@@ -112,6 +113,7 @@ class TagsController extends Controller
      *      tags={"Tags"},
      *      summary="Store new tag",
      *      description="Returns tag data",
+     *        security={{"bearer_token":{}}},
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(ref="#/components/schemas/StoreTagsRequestModel")
@@ -158,6 +160,7 @@ class TagsController extends Controller
      *      tags={"Tags"},
      *      summary="Show certain tag",
      *      description="Returns an tag data",
+     *        security={{"bearer_token":{}}},
      *      @OA\Parameter(
      *          name="id",
      *          description="Tags id",
@@ -216,6 +219,7 @@ class TagsController extends Controller
      *      tags={"Tags"},
      *      summary="Update existing tag",
      *      description="Returns updated tag data",
+     *        security={{"bearer_token":{}}},
      *      @OA\Parameter(
      *          name="id",
      *          description="Tags id",
@@ -276,6 +280,7 @@ class TagsController extends Controller
      *      tags={"Tags"},
      *      summary="Delete existing Tags",
      *      description="Deletes a record and returns no content",
+     *        security={{"bearer_token":{}}},
      *      @OA\Parameter(
      *          name="id",
      *          description="Tag id",
