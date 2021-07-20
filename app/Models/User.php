@@ -59,6 +59,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['full_name'];
+
+    public function searchable()
+    {
+        return [
+            'full_name',
+            'birth_date',
+            'contact_number',
+            'full_address',
+            'email',
+            'status',
+            'account_type',
+        ];
+    }
+
+    public function getFullNameAttribute()
+    {
+        return ucfirst($this->last_name).', '.ucfirst($this->first_name).' '.ucfirst($this->middle_name ?? '');
+    }
+
     /**
      * Increment the login attempts of the user.
      */

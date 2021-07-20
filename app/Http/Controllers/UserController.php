@@ -3,24 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Filters\ResourceFilters;
-use App\Http\Requests\CreateArticleRequest;
-use App\Models\Article;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\CreateUserRequest;
+use App\Models\User;
 
-class ArticleController extends Controller
+class UserController extends Controller
 {
     /**
      * @OA\Get(
-     *      path="/articles",
-     *      operationId="indexArticle",
-     *      tags={"Articles"},
-     *      summary="Get all articles",
-     *      description="Returns list of article data",
+     *      path="/users",
+     *      operationId="indexUser",
+     *      tags={"Users"},
+     *      summary="Get all users",
+     *      description="Returns list of user data",
      *      security={{"bearer_token":{}}},
      *
      *     @OA\Parameter(
-     *          name="header",
-     *          description="Filter by header of the article",
+     *          name="full_name",
+     *          description="Filter by full name of the user",
      *          required=false,
      *          in="query",
      *          @OA\Schema(
@@ -28,8 +27,8 @@ class ArticleController extends Controller
      *          )
      *      ),
      *     @OA\Parameter(
-     *          name="category_name",
-     *          description="Filter by the name of article's category",
+     *          name="birth_date",
+     *          description="Filter by the birth_date of user",
      *          required=false,
      *          in="query",
      *          @OA\Schema(
@@ -37,8 +36,8 @@ class ArticleController extends Controller
      *          )
      *      ),
      *     @OA\Parameter(
-     *          name="creator_full_name",
-     *          description="Filter by the full name of article's creator",
+     *          name="contact_number",
+     *          description="Filter by the contact number of user",
      *          required=false,
      *          in="query",
      *          @OA\Schema(
@@ -46,8 +45,26 @@ class ArticleController extends Controller
      *          )
      *      ),
      *     @OA\Parameter(
-     *          name="tags_name",
-     *          description="Filter by the name of article's tags",
+     *          name="full_address",
+     *          description="Filter by the full address of user",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="email",
+     *          description="Filter by the email of user",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="account_type",
+     *          description="Filter by the account type of user",
      *          required=false,
      *          in="query",
      *          @OA\Schema(
@@ -56,7 +73,7 @@ class ArticleController extends Controller
      *      ),
      *     @OA\Parameter(
      *          name="status",
-     *          description="Filter by status of article 1 = Active, 0 = Inactive",
+     *          description="Filter by status of user 1 = Active, 0 = Inactive",
      *          required=false,
      *          in="query",
      *          @OA\Schema(
@@ -107,13 +124,14 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ResourceFilters $filters, Article $article)
+    public function index(ResourceFilters $filters, User $user)
     {
-        return $this->generateCachedResponse(function () use ($filters, $article) {
-            $articleList = $article
-                    ->filter($filters);
+        return $this->generateCachedResponse(function () use ($filters, $user) {
+            $userList = $user
+                    ->filter($filters)
+                    ->where('account_type', '<>', 'SuperAdmin');
 
-            return $this->paginateOrGet($articleList);
+            return $this->paginateOrGet($userList);
         });
     }
 
@@ -128,15 +146,15 @@ class ArticleController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/articles",
-     *      operationId="storeArticle",
-     *      tags={"Articles"},
-     *      summary="Store new article",
-     *      description="Returns article data",
+     *      path="/users",
+     *      operationId="storeUser",
+     *      tags={"Users"},
+     *      summary="Store new user",
+     *      description="Returns user data",
      *        security={{"bearer_token":{}}},
      *      @OA\RequestBody(
      *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/StoreArticleRequestModel")
+     *          @OA\JsonContent(ref="#/components/schemas/StoreUserRequestModel")
      *      ),
      *      @OA\Response(
      *          response=201,
@@ -162,42 +180,24 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateArticleRequest $request, Article $article)
+    public function store(CreateUserRequest $request, User $user)
     {
-        try {
-            DB::beginTransaction();
-            $articleObject = $article->create($request->validated());
+        $userObject = $user->create($request->validated());
 
-            // Set SLUG value
-            $articleObject->slug = $articleObject->header;
-            $article->created_by = request()->user()->id;
-            $articleObject->save();
-
-            if ($request->tag_ids) {
-                $articleObject->tags()->sync($request->tag_ids);
-            }
-
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-
-            return \response(['message' => $th->getMessage()], 400);
-        }
-
-        return \response($articleObject, 201);
+        return \response($userObject, 201);
     }
 
     /**
      * @OA\Get(
-     *      path="/articles/{article}",
-     *      operationId="showArticle",
-     *      tags={"Articles"},
-     *      summary="Show certain article",
-     *      description="Returns an article data",
+     *      path="/users/{user}",
+     *      operationId="showUser",
+     *      tags={"Users"},
+     *      summary="Show certain user",
+     *      description="Returns an user data",
      *      security={{"bearer_token":{}}},
      *      @OA\Parameter(
-     *          name="article",
-     *          description="Article's id",
+     *          name="user",
+     *          description="User's id",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -228,15 +228,9 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show(User $user)
     {
-        $article = $article->load([
-            'category',
-            'tags',
-            'creator',
-        ]);
-
-        return response($article);
+        return response($user);
     }
 
     /**
@@ -252,15 +246,15 @@ class ArticleController extends Controller
 
     /**
      * @OA\Put(
-     *      path="/articles/{article}",
-     *      operationId="updateArticle",
-     *      tags={"Articles"},
-     *      summary="Update existing article",
-     *      description="Returns updated article data",
+     *      path="/users/{user}",
+     *      operationId="updateUser",
+     *      tags={"Users"},
+     *      summary="Update existing user",
+     *      description="Returns updated user data",
      *      security={{"bearer_token":{}}},
      *      @OA\Parameter(
-     *          name="article",
-     *          description="Article id",
+     *          name="user",
+     *          description="User id",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -269,7 +263,7 @@ class ArticleController extends Controller
      *      ),
      *      @OA\RequestBody(
      *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/UpdateArticleRequestModel")
+     *          @OA\JsonContent(ref="#/components/schemas/UpdateUserRequestModel")
      *      ),
      *      @OA\Response(
      *          response=200,
@@ -299,37 +293,24 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(CreateArticleRequest $request, Article $article)
+    public function update(CreateUserRequest $request, User $user)
     {
-        try {
-            DB::beginTransaction();
-            $article->update($request->validated());
+        $user->update($request->validated());
 
-            if ($request->tag_ids) {
-                $article->tags()->sync($request->tag_ids);
-            }
-
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-
-            return \response(['message' => $th->getMessage()], 400);
-        }
-
-        return response($article, 200);
+        return response($user, 200);
     }
 
     /**
      * @OA\Delete(
-     *      path="/articles/{article}",
-     *      operationId="deleteArticle",
-     *      tags={"Articles"},
-     *      summary="Delete existing Article",
+     *      path="/users/{user}",
+     *      operationId="deleteUser",
+     *      tags={"Users"},
+     *      summary="Delete existing user",
      *      description="Deletes a record and returns no content",
      *      security={{"bearer_token":{}}},
      *      @OA\Parameter(
-     *          name="article",
-     *          description="Article id",
+     *          name="user",
+     *          description="User id",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -360,9 +341,9 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy(User $user)
     {
-        $article->delete();
+        $user->delete();
 
         return response(['message' => 'Deleted successfully'], 200);
     }

@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
-class CreateArticleRequest extends FormRequest
+class CreateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,43 +26,47 @@ class CreateArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'header' => [
+            'first_name' => [
                 'required',
                 'string',
             ],
-            'body' => [
+            'last_name' => [
                 'required',
                 'string',
             ],
-            'video_path' => [
+            'middle_name' => [
                 'nullable',
                 'string',
             ],
-            'thumbnail_path' => [
-                'nullable',
-                'string',
+            'birth_date' => [
+                'required',
+                'date',
             ],
-            'view_count' => [
-                'nullable',
+            'contact_number' => [
+                'required',
                 'numeric',
+            ],
+            'full_address' => [
+                'required',
+                'string',
+            ],
+            'avatar_path' => [
+                'nullable',
+                'string',
+            ],
+            'email' => [
+                'required',
+                'email',
+                'unique:users',
             ],
             'status' => [
                 'nullable',
                 'numeric',
             ],
-            'article_category_id' => [
+            'account_type' => [
                 'required',
-                'numeric',
-                'exists:article_categories,id',
-            ],
-            'tag_ids' => [
-                'nullable',
-                'array',
-            ],
-            'tags_ids.*' => [
-                'nullable',
-                'numeric',
-                'exists:tags,id',
+                'string',
+                Rule::in(['Admin', 'ContentWriter']),
             ],
         ];
     }
