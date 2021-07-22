@@ -18,6 +18,7 @@ class Article extends Model
         'slug',
         'header',
         'body',
+        'short_description',
         'video_path',
         'thumbnail_path',
         'view_count',

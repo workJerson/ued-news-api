@@ -16,6 +16,7 @@ class ArticleCategory extends Model
     protected $fillable = [
         'name',
         'description',
+        'slug',
         'status',
     ];
 

@@ -23,66 +23,16 @@ class ArticleCategoryTableSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'name' => 'Cars',
-                'description' => 'Cars article category',
-            ],
-            [
-                'id' => 3,
                 'name' => 'Entertainment',
                 'description' => 'Entertainment article category',
             ],
             [
-                'id' => 4,
-                'name' => 'Family',
-                'description' => 'Family article category',
-            ],
-            [
-                'id' => 5,
-                'name' => 'Health',
-                'description' => 'Health article category',
-            ],
-            [
-                'id' => 6,
-                'name' => 'Politics',
-                'description' => 'Politics article category',
-            ],
-            [
-                'id' => 7,
-                'name' => 'Religion',
-                'description' => 'Religion article category',
-            ],
-            [
-                'id' => 8,
-                'name' => 'Science',
-                'description' => 'Science article category',
-            ],
-            [
-                'id' => 9,
-                'name' => 'Sports',
-                'description' => 'Sports article category',
-            ],
-            [
-                'id' => 10,
-                'name' => 'Technology',
-                'description' => 'Technology article category',
-            ],
-            [
-                'id' => 11,
-                'name' => 'Travel',
-                'description' => 'Travel article category',
-            ],
-            [
-                'id' => 12,
+                'id' => 3,
                 'name' => 'Video',
                 'description' => 'Video article category',
             ],
             [
-                'id' => 13,
-                'name' => 'World',
-                'description' => 'World article category',
-            ],
-            [
-                'id' => 14,
+                'id' => 4,
                 'name' => 'News',
                 'description' => 'News article category',
             ],
@@ -93,6 +43,8 @@ class ArticleCategoryTableSeeder extends Seeder
             if (!$articleCategoryObject->wasRecentlyCreated) {
                 $articleCategoryObject->update(Arr::only($articleCategory, ['name', 'description']));
             }
+            $articleCategoryObject->slug = $articleCategoryObject->name;
+            $articleCategoryObject->save();
         }
     }
 }
