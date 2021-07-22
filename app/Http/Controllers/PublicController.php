@@ -261,12 +261,12 @@ class PublicController extends Controller
      *      )
      * )
      */
-    public function showArticlesByCategory(string $categoryName, ResourceFilters $filters, Article $articles)
+    public function showArticlesByCategory(string $slug, ResourceFilters $filters, Article $articles)
     {
-        return $this->generateCachedResponse(function () use ($filters, $articles, $categoryName) {
+        return $this->generateCachedResponse(function () use ($filters, $articles, $slug) {
             $articleList = $articles
-                    ->whereHas('category', function ($query) use ($categoryName) {
-                        $query->where('name', $categoryName);
+                    ->whereHas('category', function ($query) use ($slug) {
+                        $query->where('slug', $slug);
                     })
                     ->with(['tags'])
                     ->filter($filters);
