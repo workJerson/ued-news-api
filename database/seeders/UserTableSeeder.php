@@ -25,7 +25,7 @@ class UserTableSeeder extends Seeder
                 'email' => 'super.admin@yopmail.com',
                 'password' => 'Password@123',
                 'account_type' => 'SuperAdmin',
-                'avatar_path' => 'https://i.ytimg.com/vi/Fkz3g92wBAI/hqdefault.jpg',
+                'avatar_path' => 'https://external-preview.redd.it/6KZr9IViUrjVntO3h7EZY21kosP4FMJLGMiPFn4dEf8.png?format=pjpg&auto=webp&s=c23947743e7784c31e7c9fb6a2c87ac30b68533d',
             ]
         );
     }
