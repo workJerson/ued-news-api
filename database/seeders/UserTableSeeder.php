@@ -16,7 +16,7 @@ class UserTableSeeder extends Seeder
     {
         $superAdmin = User::firstOrCreate(['id' => 1],
             [
-                'first_name' => 'Super',
+                'first_name' => 'Supers',
                 'last_name' => 'Admin',
                 'middle_name' => 'S',
                 'birth_date' => '12/16/1997',
