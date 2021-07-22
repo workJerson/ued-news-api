@@ -36,23 +36,23 @@ class PublicController extends Controller
         $data['latest_news'] = Article::whereHas('category', function ($query) { // Get latest news take 4
             $query->where('name', 'News');
         })->orderBy('id', 'desc')
-            ->take(4)
+            ->take(5)
             ->get();
 
         $data['most_read'] = Article::whereHas('category', function ($query) { // Get latest news with highest views
             $query->where('name', 'News');
         })->orderBy('view_count', 'desc')
-            ->take(4)
+            ->take(5)
             ->get();
 
         $data['top_stories'] = Article::orderBy('id', 'desc') // Get first two top articles
-            ->take(2)
+            ->take(3)
             ->with(['category'])
             ->get();
 
         $data['watch_now'] = Article::whereNotNull('video_path') // Get latest articles with video
                     ->orderBy('id', 'desc')
-                    ->take(2)
+                    ->take(4)
                     ->with(['category'])
                     ->get();
 

@@ -39,6 +39,6 @@ class ArticleCategory extends Model
         return $this->articles()
             ->orderBy('view_count', 'desc')
             ->orderBy('id', 'desc')
-            ->take(2);
+            ->take(5);
     }
 }
