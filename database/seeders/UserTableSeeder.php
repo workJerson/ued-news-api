@@ -16,7 +16,7 @@ class UserTableSeeder extends Seeder
     {
         $superAdmin = User::firstOrCreate(['id' => 1],
             [
-                'first_name' => 'Supers',
+                'first_name' => 'Super',
                 'last_name' => 'Admin',
                 'middle_name' => 'S',
                 'birth_date' => '12/16/1997',
@@ -25,7 +25,6 @@ class UserTableSeeder extends Seeder
                 'email' => 'super.admin@yopmail.com',
                 'password' => 'Password@123',
                 'account_type' => 'SuperAdmin',
-                'avatar_path' => 'https://external-preview.redd.it/6KZr9IViUrjVntO3h7EZY21kosP4FMJLGMiPFn4dEf8.png?format=pjpg&auto=webp&s=c23947743e7784c31e7c9fb6a2c87ac30b68533d',
             ]
         );
     }
