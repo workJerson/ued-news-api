@@ -45,6 +45,11 @@ class PublicController extends Controller
             ->take(4)
             ->get();
 
+        $data['top_stories'] = Article::orderBy('id', 'desc') // Get first two top articles
+            ->take(2)
+            ->with(['category'])
+            ->get();
+
         $data['watch_now'] = Article::whereNotNull('video_path') // Get latest articles with video
                     ->orderBy('id', 'desc')
                     ->take(2)
@@ -56,7 +61,7 @@ class PublicController extends Controller
             'News',
             'Business',
             'Entertainment',
-            'Weather',
+            'Video',
         ];
 
         $data['categories'] = ArticleCategory::whereIn('name', $categories)
