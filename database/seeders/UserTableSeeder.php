@@ -25,6 +25,7 @@ class UserTableSeeder extends Seeder
                 'email' => 'super.admin@yopmail.com',
                 'password' => 'Password@123',
                 'account_type' => 'SuperAdmin',
+                'avatar_path' => 'https://i.ytimg.com/vi/Fkz3g92wBAI/hqdefault.jpg',
             ]
         );
     }
