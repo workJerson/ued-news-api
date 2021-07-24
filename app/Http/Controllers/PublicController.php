@@ -315,4 +315,70 @@ class PublicController extends Controller
     {
         return ArticleCategory::all();
     }
+
+    /**
+     * @OA\Get(
+     *      path="/public/global-search/articles",
+     *      operationId="articleGlobalSearch",
+     *      tags={"Public"},
+     *      summary="Get all articles by keyword",
+     *      description="Returns list of article data",
+     *      @OA\Parameter(
+     *          name="search",
+     *          description="quick search",
+     *          required=true,
+     *          in="query",
+     *          example="news",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="page",
+     *          description="Page",
+     *          required=true,
+     *          in="query",
+     *          example="1",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="per_page",
+     *          description="Items per page",
+     *          required=false,
+     *          in="query",
+     *          example="15",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
+    public function articleGlobalSearch(ResourceFilters $filters, Article $articles)
+    {
+        return $this->generateCachedResponse(function () use ($filters, $articles) {
+            $articleList = $articles
+                    ->with(['tags', 'category', 'creatorDetails'])
+                    ->filter($filters);
+
+            return $this->paginateOrGet($articleList);
+        });
+    }
 }

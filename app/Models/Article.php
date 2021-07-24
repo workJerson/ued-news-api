@@ -34,7 +34,8 @@ class Article extends Model
             'status',
             'header',
             'category_name',
-            'creator_full_name',
+            'creator_first_name',
+            'creator_last_name',
             'tags_name',
         ];
     }
