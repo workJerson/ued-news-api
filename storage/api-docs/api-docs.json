@@ -662,7 +662,7 @@
                 }
             }
         },
-        "/public/articles/category/{categoryName}": {
+        "/public/articles/category/{slug}": {
             "get": {
                 "tags": [
                     "Public"

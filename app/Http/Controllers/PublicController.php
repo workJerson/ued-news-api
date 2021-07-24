@@ -211,7 +211,7 @@ class PublicController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/public/articles/category/{categoryName}",
+     *      path="/public/articles/category/{slug}",
      *      operationId="showArticlesByCategory",
      *      tags={"Public"},
      *      summary="Get all articles by category name",
