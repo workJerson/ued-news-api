@@ -37,12 +37,14 @@ class PublicController extends Controller
             $query->where('name', 'News');
         })->orderBy('id', 'desc')
             ->take(5)
+            ->with(['category'])
             ->get();
 
         $data['most_read'] = Article::whereHas('category', function ($query) { // Get latest news with highest views
             $query->where('name', 'News');
         })->orderBy('view_count', 'desc')
             ->take(5)
+            ->with(['category'])
             ->get();
 
         $data['top_stories'] = Article::orderBy('id', 'desc') // Get first two top articles
@@ -71,6 +73,7 @@ class PublicController extends Controller
             ->orderBy('id', 'desc')
                 ->orderBy('view_count', 'desc')
                 ->take(5)
+                ->with(['category'])
                 ->get();
         });
 
