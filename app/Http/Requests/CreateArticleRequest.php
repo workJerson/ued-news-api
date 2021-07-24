@@ -29,6 +29,10 @@ class CreateArticleRequest extends FormRequest
                 'required',
                 'string',
             ],
+            'short_description' => [
+                'required',
+                'string',
+            ],
             'body' => [
                 'required',
                 'string',
