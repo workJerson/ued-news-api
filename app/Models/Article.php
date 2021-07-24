@@ -49,6 +49,11 @@ class Article extends Model
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
+    public function creatorDetails()
+    {
+        return $this->creator()->select(['first_name', 'last_name', 'middle_name', 'id']);
+    }
+
     public function category()
     {
         return $this->belongsTo(ArticleCategory::class, 'article_category_id', 'id');

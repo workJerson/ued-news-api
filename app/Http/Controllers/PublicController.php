@@ -133,6 +133,7 @@ class PublicController extends Controller
             $article->load([
                 'category',
                 'tags',
+                'creatorDetails',
             ]);
 
             $data['article'] = $article;
