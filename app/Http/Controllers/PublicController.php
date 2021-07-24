@@ -64,10 +64,17 @@ class PublicController extends Controller
             'Video',
         ];
 
-        $data['categories'] = ArticleCategory::whereIn('name', $categories)
-                    ->with([
-                        'latestArticles',
-                    ])->get();
+        $categoryList = ArticleCategory::whereIn('name', $categories)->get();
+        // WIP: For refactor to remove loop query
+        $categoryList->each(function ($item, $key) {
+            $item->latest_articles = Article::where('article_category_id', $item->id)
+            ->orderBy('id', 'desc')
+                ->orderBy('view_count', 'desc')
+                ->take(5)
+                ->get();
+        });
+
+        $data['categories'] = $categoryList;
 
         $data['latest_videos'] = Article::whereNotNull('video_path') // Get latest articles with video
                     ->orderBy('id', 'desc')

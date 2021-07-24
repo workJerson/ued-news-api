@@ -37,14 +37,10 @@ class ArticleCategory extends Model
 
     public function latestArticles()
     {
-        // return Article::where('article_category_id', $this->id)
-        // ->orderBy('view_count', 'desc')
-        // ->orderBy('id', 'desc')
-        // ->limit(5);
         return $this->articles()
-            ->orderBy('view_count', 'desc')
             ->orderBy('id', 'desc')
-            ->limit(5);
+            ->orderBy('view_count', 'desc')
+            ->take(5);
     }
 
     public function setSlugAttribute($value)
