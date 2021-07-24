@@ -224,8 +224,8 @@ class PublicController extends Controller
      *      summary="Get all articles by category name",
      *      description="Returns list of article data",
      *      @OA\Parameter(
-     *          name="categoryName",
-     *          description="Category name",
+     *          name="slug",
+     *          description="Category slug",
      *          required=true,
      *          in="path",
      *          @OA\Schema(

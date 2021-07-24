@@ -672,9 +672,9 @@
                 "operationId": "showArticlesByCategory",
                 "parameters": [
                     {
-                        "name": "categoryName",
+                        "name": "slug",
                         "in": "path",
-                        "description": "Category name",
+                        "description": "Category slug",
                         "required": true,
                         "schema": {
                             "type": "string"
