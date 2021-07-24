@@ -279,7 +279,7 @@ class PublicController extends Controller
                     ->whereHas('category', function ($query) use ($slug) {
                         $query->where('slug', $slug);
                     })
-                    ->with(['tags'])
+                    ->with(['tags', 'category'])
                     ->filter($filters);
 
             return $this->paginateOrGet($articleList);
