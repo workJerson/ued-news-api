@@ -274,4 +274,34 @@ class PublicController extends Controller
             return $this->paginateOrGet($articleList);
         });
     }
+
+    /**
+     * @OA\Get(
+     *      path="/public/categories",
+     *      operationId="showAllCategories",
+     *      tags={"Public"},
+     *      summary="Get all article categories",
+     *      description="Returns list of article category data",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
+    public function showAllCategories()
+    {
+        return ArticleCategory::all();
+    }
 }
