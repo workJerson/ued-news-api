@@ -140,7 +140,10 @@ class PublicController extends Controller
             $data['related_news'] = Article::where('article_category_id', $article->article_category_id)
                         ->orderBy('id', 'desc')
                         ->orderBy('view_count', 'desc')
-                        ->take(10)->get();
+                        ->take(10)
+                        ->with(['category'])
+                        ->get();
+
             $data['latest_videos'] = Article::whereNotNull('video_path')
                         ->orderBy('id', 'desc')
                         ->orderBy('view_count', 'desc')
