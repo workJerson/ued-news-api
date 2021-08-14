@@ -27,9 +27,11 @@ Route::group(
     ['prefix' => 'public'],
     function () {
         Route::get('articles', PublicController::class)->name('articles');
+        Route::get('categories', 'App\Http\Controllers\PublicController@showAllCategories');
         Route::get('articles/{slug}', 'App\Http\Controllers\PublicController@showArticleBySlug');
-        Route::get('articles/category/{categoryName}', 'App\Http\Controllers\PublicController@showArticlesByCategory');
+        Route::get('articles/category/{slug}', 'App\Http\Controllers\PublicController@showArticlesByCategory');
         Route::get('articles/tags/{slug}', 'App\Http\Controllers\PublicController@showArticlesByTag');
+        Route::get('global-search/articles', 'App\Http\Controllers\PublicController@articleGlobalSearch');
     }
 );
 

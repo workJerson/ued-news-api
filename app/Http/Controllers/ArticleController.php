@@ -170,7 +170,7 @@ class ArticleController extends Controller
 
             // Set SLUG value
             $articleObject->slug = $articleObject->header;
-            $article->created_by = request()->user()->id;
+            $articleObject->created_by = request()->user()->id;
             $articleObject->save();
 
             if ($request->tag_ids) {

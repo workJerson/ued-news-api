@@ -18,23 +18,23 @@ class TagTableSeeder extends Seeder
         $tags = [
             [
                 'id' => 1,
-                'name' => 'Sample Tag 1',
+                'name' => 'Trending',
             ],
             [
                 'id' => 2,
-                'name' => 'Sample Tag 2',
+                'name' => 'Happy',
             ],
             [
                 'id' => 3,
-                'name' => 'Sample Tag 3',
+                'name' => 'War',
             ],
             [
                 'id' => 4,
-                'name' => 'Sample Tag 4',
+                'name' => 'Cooking Shows',
             ],
             [
                 'id' => 5,
-                'name' => 'Sample Tag 5',
+                'name' => 'Philippines Today',
             ],
         ];
 

@@ -18,6 +18,7 @@ class Article extends Model
         'slug',
         'header',
         'body',
+        'short_description',
         'video_path',
         'thumbnail_path',
         'view_count',
@@ -33,7 +34,8 @@ class Article extends Model
             'status',
             'header',
             'category_name',
-            'creator_full_name',
+            'creator_first_name',
+            'creator_last_name',
             'tags_name',
         ];
     }
@@ -46,6 +48,11 @@ class Article extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function creatorDetails()
+    {
+        return $this->creator()->select(['first_name', 'last_name', 'middle_name', 'id']);
     }
 
     public function category()

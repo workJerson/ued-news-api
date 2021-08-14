@@ -662,7 +662,7 @@
                 }
             }
         },
-        "/public/articles/category/{categoryName}": {
+        "/public/articles/category/{slug}": {
             "get": {
                 "tags": [
                     "Public"
@@ -672,9 +672,9 @@
                 "operationId": "showArticlesByCategory",
                 "parameters": [
                     {
-                        "name": "categoryName",
+                        "name": "slug",
                         "in": "path",
-                        "description": "Category name",
+                        "description": "Category slug",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -697,6 +697,86 @@
                         "schema": {
                             "type": "integer"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/public/categories": {
+            "get": {
+                "tags": [
+                    "Public"
+                ],
+                "summary": "Get all article categories",
+                "description": "Returns list of article category data",
+                "operationId": "showAllCategories",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/public/global-search/articles": {
+            "get": {
+                "tags": [
+                    "Public"
+                ],
+                "summary": "Get all articles by keyword",
+                "description": "Returns list of article data",
+                "operationId": "articleGlobalSearch",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "quick search",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "news"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "15"
                     }
                 ],
                 "responses": {
