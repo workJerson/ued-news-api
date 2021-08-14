@@ -138,6 +138,7 @@ class PublicController extends Controller
 
             $data['article'] = $article;
             $data['related_news'] = Article::where('article_category_id', $article->article_category_id)
+                        ->where('id', '<>', $article->id)
                         ->orderBy('id', 'desc')
                         ->orderBy('view_count', 'desc')
                         ->take(10)
