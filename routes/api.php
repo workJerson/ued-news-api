@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UserController;
@@ -45,6 +46,7 @@ Route::group(
 Route::group(
     ['middleware' => 'auth:api'],
     function () {
+        Route::get('dashboard', DashboardController::class)->name('dashboard');
         Route::resource('articles', ArticleController::class, ['except' => ['edit', 'create']]);
         Route::resource('article-categories', ArticleCategoryController::class, ['except' => ['edit', 'create']]);
         Route::resource('tags', TagsController::class, ['except' => ['edit', 'create']]);
